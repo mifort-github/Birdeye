@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "birdeye",
+  "version": "${version}",
+  "name": "Birdeye",
+  "description": "Birdeye is a small addon for Xaero's World Map that adds a smooth animation to the map, giving it a bit of life without touching anything else about how the map works.",
+  "authors": [
+    "mifort",
+    "JonMyDude"
+  ],
+  "contact": {
+    "discord": "https://discord.com/invite/qAEWgpaJrZ",
+    "sources": "https://github.com/mifort-github/birdeye",
+    "issues": "https://github.com/mifort-github/birdeye/issues"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.com/invite/qAEWgpaJrZ"
+      }
+    }
+  },
+  "license": "All Rights Reserved",
+  "icon": "assets/birdeye/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.mifort.fabric.BirdeyeFabricClient"
+    ],
+    "modmenu": [
+      "net.mifort.fabric.config.BirdeyeModMenu"
+    ]
+  },
+  "mixins": [
+    "birdeye.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": ">=1.20.0 <1.20.2",
+    "java": ">=17",
+    "fabric-api": "*",
+    "xaerolib": ">=1.0.42",
+    "xaeroworldmap": ">=1.40.4"
+  },
+  "suggests": {
+    "cloth-config": "*",
+    "xaerominimap": ">=25.3.5"
+  }
+}
