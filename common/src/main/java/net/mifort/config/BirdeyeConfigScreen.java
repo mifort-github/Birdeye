@@ -14,13 +14,20 @@ public class BirdeyeConfigScreen {
 
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Component.literal("Map Animation"));
+                .setTitle(Component.literal("Birdeye"));
 
         builder.setSavingRunnable(config::save);
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
         ConfigCategory camera = builder.getOrCreateCategory(Component.literal("Camera"));
+
+        camera.addEntry(
+                entryBuilder.startBooleanToggle(Component.literal("Unlock Height"), config.UNLOCK_HEIGHT)
+                        .setDefaultValue(false)
+                        .setSaveConsumer(value -> config.UNLOCK_HEIGHT = value)
+                        .build()
+        );
 
         camera.addEntry(
                 entryBuilder.startDoubleField(Component.literal("Animation Duration Mul"), config.ANIMATION_DURATION_MUL)

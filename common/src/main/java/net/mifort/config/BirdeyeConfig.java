@@ -16,6 +16,8 @@ public class BirdeyeConfig {
 
     public static Path CONFIG_DIR;
 
+    public boolean UNLOCK_HEIGHT = false;
+
     public double ANIMATION_DURATION_MUL = 0.5;
     public double ANIMATION_DURATION_MIN = 1;
     public double ANIMATION_DURATION_MAX = 3;
