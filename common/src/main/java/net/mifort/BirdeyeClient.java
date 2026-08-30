@@ -35,13 +35,30 @@ public class BirdeyeClient {
     }
 
     public static void onClientTick(Minecraft client) {
-        while (TOGGLE_CAMERA.consumeClick()) {
-            CameraAnimation.toggle(client, zoomMul);
-        }
+        if (TOGGLE_CAMERA.same(SKIP_ANIMATION)) {
+            while (TOGGLE_CAMERA.consumeClick()) {
+                SKIP_ANIMATION.consumeClick();
 
-        while (SKIP_ANIMATION.consumeClick()) {
-            if (CameraAnimation.isAnimating()) {
-                CameraAnimation.skipAnimation();
+                if (CameraAnimation.isAnimating()) {
+                    CameraAnimation.skipAnimation();
+                } else {
+                    CameraAnimation.toggle(client, zoomMul);
+                }
+            }
+        } else {
+            while (TOGGLE_CAMERA.consumeClick()) {
+                CameraAnimation.toggle(client, zoomMul);
+            }
+
+            boolean animating = CameraAnimation.isAnimating();
+            if (animating) {
+                while (SKIP_ANIMATION.consumeClick()) {
+                    CameraAnimation.skipAnimation();
+                }
+            } else {
+                while (SKIP_ANIMATION.consumeClick()) {
+
+                }
             }
         }
 

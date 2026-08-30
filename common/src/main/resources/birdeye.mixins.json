@@ -11,6 +11,7 @@
     "GameRendererMixin",
     "GuiMixin",
     "KeyMappingAccessor",
+    "KeyMappingMixin",
     "LocalPlayerDeathMixin",
     "LocalPlayerDimensionMixin",
     "MouseHandlerMixin"
