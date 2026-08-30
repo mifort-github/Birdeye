@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "net.mifort.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "BlockMapOpenMixin",
+    "CameraInvoker",
+    "CameraMixin",
+    "CloseMixin",
+    "GameRendererMixin",
+    "GuiMixin",
+    "KeyMappingAccessor",
+    "LocalPlayerDeathMixin",
+    "LocalPlayerDimensionMixin",
+    "MouseHandlerMixin"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

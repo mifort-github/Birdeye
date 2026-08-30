@@ -1,0 +1,66 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "birdeye"
+version = "${version}"
+displayName = "Birdeye"
+authors = "mifort, JonMyDude"
+
+description = """
+Birdeye is a small addon for Xaero's World Map that adds a smooth animation to the map.
+
+Discord: https://discord.com/invite/qAEWgpaJrZ
+Source: https://github.com/mifort-github/Birdeye
+Issues: https://github.com/mifort-github/Birdeye/issues
+"""
+logoFile = "assets/birdeye/icon.png"
+
+[[dependencies.birdeye]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[modproperties.birdeye]
+displayTest = "IGNORE_SERVER_VERSION"
+
+[[dependencies.birdeye]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.0,1.21.5],[1.21.8]"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.birdeye]]
+modId = "xaerolib"
+type = "required"
+versionRange = "[1.0.42,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.birdeye]]
+modId = "xaeroworldmap"
+type = "required"
+versionRange = "[1.40.4,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.birdeye]]
+modId = "cloth_config"
+type = "optional"
+versionRange = "[0,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.birdeye]]
+modId = "xaerominimap"
+type = "optional"
+versionRange = "[25.3.5,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[mixins]]
+config = "birdeye.mixins.json"
