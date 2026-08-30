@@ -3,12 +3,15 @@ package net.mifort;
 import net.mifort.config.BirdeyeConfig;
 import net.mifort.mixin.CameraInvoker;
 import net.minecraft.client.Camera;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import xaero.lib.client.config.ClientConfigManager;
 import xaero.map.WorldMap;
@@ -21,6 +24,7 @@ public final class CameraAnimation {
     private static final double HEIGHT = 8.0;
     private static final long ANIMATION_DURATION = 1000L;
     private static final double PLAYER_RENDER_THRESHOLD = 1.0;
+    private static final float THIRD_PERSON_MAX_DISTANCE = 4.0f;
 
     private static boolean detached = false;
     private static boolean animating = false;
@@ -70,7 +74,7 @@ public final class CameraAnimation {
 
         LocalPlayer player = mc.player;
 
-        double eyeLevel = player.getEyeY() - player.getY();
+        double cameraHeightOffset = getIntendedCameraPosition(mc, player, 1.0F).y - player.getY();
 
         double screenShortSide = Math.min(mc.getWindow().getWidth(), mc.getWindow().getHeight());
 
@@ -84,7 +88,7 @@ public final class CameraAnimation {
 
         double length = mc.getWindow().getHeight() / (2.0 / zoomMul * idk * ScaleMultiplier);
 
-        double heightChange = length / Math.tan(Math.toRadians(0.5*fov)) - eyeLevel;
+        double heightChange = length / Math.tan(Math.toRadians(0.5*fov)) - cameraHeightOffset;
 
         double h = !config.UNLOCK_HEIGHT ? Math.min(heightChange, maxHeight) : heightChange;
 
@@ -245,7 +249,7 @@ public final class CameraAnimation {
             pauseStartedAt = 0L;
         }
 
-        Vec3 playerPos = mc.player.getEyePosition(partialTick);
+        Vec3 playerPos = getIntendedCameraPosition(mc, mc.player, partialTick);
         double hh = getSkyObstructionDistance(mc, playerPos, animationHeight);
 
         if (returning) {
@@ -349,6 +353,53 @@ public final class CameraAnimation {
 
     public static boolean isPlayerVisible() {
         return isCameraModeActive() && playerVisible;
+    }
+
+    private static Vec3 getIntendedCameraPosition(Minecraft mc, LocalPlayer player, float partialTick) {
+        Vec3 eyePosition = player.getEyePosition(partialTick);
+
+        if (mc.level == null) {
+            return eyePosition;
+        }
+
+        CameraType cameraType = mc.options.getCameraType();
+
+        if (cameraType.isFirstPerson()) {
+            return eyePosition;
+        }
+
+        Vec3 lookVector = player.getViewVector(partialTick);
+        boolean mirrored = cameraType.isMirrored();
+
+        Vec3 offsetDirection = mirrored ? lookVector : lookVector.scale(-1.0);
+
+        float distance = getFreeCameraDistance(mc, player, eyePosition, offsetDirection, THIRD_PERSON_MAX_DISTANCE);
+
+        return eyePosition.add(offsetDirection.scale(distance));
+    }
+
+    private static float getFreeCameraDistance(Minecraft mc, Entity entity, Vec3 eyePosition, Vec3 direction, float maxDistance) {
+        float distance = maxDistance;
+
+        for (int i = 0; i < 8; i++) {
+            float offsetX = (float) (i % 2 * 2 - 1) * 0.1f;
+            float offsetY = (float) (i / 2 % 2 * 2 - 1) * 0.1f;
+            float offsetZ = (float) (i / 4 % 2 * 2 - 1) * 0.1f;
+
+            Vec3 from = eyePosition.add(offsetX, offsetY, offsetZ);
+            Vec3 to = from.add(direction.scale(distance));
+
+            HitResult hit = mc.level.clip(new ClipContext(from, to, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, entity));
+
+            if (hit.getType() != HitResult.Type.MISS) {
+                double hitDistance = hit.getLocation().distanceTo(eyePosition);
+                if (hitDistance < distance) {
+                    distance = (float) hitDistance;
+                }
+            }
+        }
+
+        return distance;
     }
 
     private static double getSkyObstructionDistance(Minecraft minecraft, Vec3 position, double maxDistance) {
