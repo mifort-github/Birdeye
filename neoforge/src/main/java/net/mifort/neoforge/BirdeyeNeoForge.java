@@ -37,6 +37,7 @@ public class BirdeyeNeoForge {
 
     private void registerKeyMappings(RegisterKeyMappingsEvent event) {
         event.register(BirdeyeClient.TOGGLE_CAMERA);
+        event.register(BirdeyeClient.SKIP_ANIMATION);
     }
 
     @SubscribeEvent

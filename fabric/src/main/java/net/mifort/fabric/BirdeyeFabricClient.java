@@ -16,6 +16,7 @@ public final class BirdeyeFabricClient implements ClientModInitializer {
         BirdeyeClient.init();
 
         KeyBindingHelper.registerKeyBinding(BirdeyeClient.TOGGLE_CAMERA);
+        KeyBindingHelper.registerKeyBinding(BirdeyeClient.SKIP_ANIMATION);
 
         ClientTickEvents.END_CLIENT_TICK.register(BirdeyeClient::onClientTick);
     }
