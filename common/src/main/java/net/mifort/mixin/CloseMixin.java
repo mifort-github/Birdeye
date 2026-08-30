@@ -21,7 +21,7 @@ public class CloseMixin {
     @Inject(method = "onInputPress", at = @At("HEAD"))
     public void onInputPress(InputConstants.Type type, int code, CallbackInfoReturnable<Boolean> cir) {
         InputConstants.Key pressed = type.getOrCreate(code);
-        InputConstants.Key bound = ((KeyMappingAccessor) BirdeyeClient.TOGGLE_CAMERA).getKey();
+        InputConstants.Key bound = ((KeyMappingAccessor) BirdeyeClient.TOGGLE_CAMERA).birdeye$getKey();
 
         if (pressed.equals(bound)) {
             ((GuiMap) (Object) this).goBack();
