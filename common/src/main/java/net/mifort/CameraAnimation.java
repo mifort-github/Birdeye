@@ -62,6 +62,8 @@ public final class CameraAnimation {
     }
 
     private static double calc() {
+        BirdeyeConfig config = BirdeyeClient.CONFIG;
+
         double maxHeight = 8.0 * renderDistance;
 
         Minecraft mc = Minecraft.getInstance();
@@ -84,7 +86,7 @@ public final class CameraAnimation {
 
         double heightChange = length / Math.tan(Math.toRadians(0.5*fov)) - eyeLevel;
 
-        double h = Math.min(heightChange, maxHeight);
+        double h = !config.UNLOCK_HEIGHT ? Math.min(heightChange, maxHeight) : heightChange;
 
         return getSkyObstructionDistance(Minecraft.getInstance(), playerCameraPosition, h);
     }
@@ -395,6 +397,16 @@ public final class CameraAnimation {
         returning = false;
         detached = false;
         playerVisible = false;
+    }
+
+    public static void skipAnimation() {
+        if (!animating) {
+            return;
+        }
+
+        animationStartTime = System.currentTimeMillis() - currentAnimationDuration;
+
+        pauseStartedAt = 0L;
     }
 
 }

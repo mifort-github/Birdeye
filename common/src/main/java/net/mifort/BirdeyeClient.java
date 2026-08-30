@@ -20,6 +20,14 @@ public class BirdeyeClient {
                     "category.birdeye"
             );
 
+    public static final KeyMapping SKIP_ANIMATION =
+            new KeyMapping(
+                    "key.birdeye.skip_animation",
+                    InputConstants.Type.MOUSE,
+                    GLFW.GLFW_MOUSE_BUTTON_LEFT,
+                    "category.birdeye"
+            );
+
     public static double zoomMul = 3.0;
 
     public static void init() {
@@ -29,6 +37,12 @@ public class BirdeyeClient {
     public static void onClientTick(Minecraft client) {
         while (TOGGLE_CAMERA.consumeClick()) {
             CameraAnimation.toggle(client, zoomMul);
+        }
+
+        while (SKIP_ANIMATION.consumeClick()) {
+            if (CameraAnimation.isAnimating()) {
+                CameraAnimation.skipAnimation();
+            }
         }
 
         CameraAnimation.tick(client);

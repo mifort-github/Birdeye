@@ -10,8 +10,8 @@
   ],
   "contact": {
     "discord": "https://discord.com/invite/qAEWgpaJrZ",
-    "sources": "https://github.com/mifort-github/birdeye",
-    "issues": "https://github.com/mifort-github/birdeye/issues"
+    "sources": "https://github.com/mifort-github/Birdeye",
+    "issues": "https://github.com/mifort-github/Birdeye/issues"
   },
   "custom": {
     "modmenu": {
@@ -36,14 +36,17 @@
   ],
   "depends": {
     "fabricloader": ">=0.16.0",
-    "minecraft": ">=1.20.0 <1.20.2",
+    "minecraft": [
+      ">=1.20.0 <1.20.2",
+      "1.20.4"
+    ],
     "java": ">=17",
     "fabric-api": "*",
     "xaerolib": ">=1.0.42",
     "xaeroworldmap": ">=1.40.4"
   },
   "suggests": {
-    "cloth-config": "*",
+    "cloth_config": "*",
     "xaerominimap": ">=25.3.5"
   }
 }

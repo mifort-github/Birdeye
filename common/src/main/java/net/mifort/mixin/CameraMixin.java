@@ -2,6 +2,7 @@ package net.mifort.mixin;
 
 import net.mifort.CameraAnimation;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,7 @@ public class CameraMixin {
 
     @ModifyVariable(method = "setup", at = @At("HEAD"), argsOnly = true, ordinal = 0)
     private boolean birdeye$forceThirdPerson(boolean thirdPerson) {
-        if (CameraAnimation.isPlayerVisible()) {
+        if (CameraAnimation.isPlayerVisible() && !Minecraft.getInstance().isPaused()) {
             return true;
         }
 

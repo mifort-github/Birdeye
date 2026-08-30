@@ -9,8 +9,8 @@ version = "${version}"
 displayName = "Birdeye"
 authors = """mifort, JonMyDude
 Discord: https://discord.com/invite/qAEWgpaJrZ
-Source: https://github.com/mifort-github/birdeye
-Issues: https://github.com/mifort-github/birdeye/issues
+Source: https://github.com/mifort-github/Birdeye
+Issues: https://github.com/mifort-github/Birdeye/issues
 """
 description = '''
 Birdeye is a small addon for Xaero's World Map that adds a smooth animation to the map, giving it a bit of life without touching anything else about how the map works.
@@ -30,7 +30,7 @@ displayTest = "IGNORE_SERVER_VERSION"
 [[dependencies.birdeye]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20.0,1.20.1]"
+versionRange = "[1.20.0,1.20.1][1.20.4]"
 ordering = "NONE"
 side = "CLIENT"
 
@@ -49,9 +49,9 @@ ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.birdeye]]
-modId = "cloth-config"
+modId = "cloth_config"
 mandatory = false
-versionRange = ""
+versionRange = "[0,)"
 ordering = "NONE"
 side = "CLIENT"
 
